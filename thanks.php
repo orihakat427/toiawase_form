@@ -3,6 +3,7 @@
   $email = $_POST['email'];
   $content = $_POST['content'];
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
