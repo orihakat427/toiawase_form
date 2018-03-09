@@ -6,16 +6,18 @@
   $content = htmlspecialchars($_POST['content']);
 
 // 1. データベース接続（スペースを空けて書かない）
-  $dsn = 'mysql:dbname=phpkiso;host=localhost';
+  $dsn = 'mysql:dbname=gs_db;host=localhost';
   $user = 'root';
   $password='';
   $dbh = new PDO($dsn, $user, $password);
   $dbh->query('SET NAMES utf8');
 
 // ２．SQL文を実行する
-  $sql = "INSERT INTO `phpkiso` (`id`, `nickname`, `email`, `content`) VALUES (NULL, 'test', 'test@yahoo.co.jp', 'テスト');";
+  $sql = "INSERT INTO `phpkiso` ( `nickname`, `email`, `content`) VALUES ( ?, ?, ?);";
+  //プリペアドステートメント
+  $data = array($nickname,$email,$content);
   $stmt = $dbh->prepare($sql);
-  $stmt->execute();
+  $stmt->execute($data);
 
 // ３．データベースを切断する（メモリを食うのでメモリリークになる）
   $dbh = null;
